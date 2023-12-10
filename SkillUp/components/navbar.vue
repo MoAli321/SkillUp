@@ -1,106 +1,154 @@
 <template>
-  <body>
- <header>
-   <img src="Logo.png" alt="logo" class="logo">
-  
-     <nav>
-       
-         <ul class="links">
-           <li><a href="/index" class="active">Home</a></li>
-           <li><a href="/CourseCatalog" class="ce" >Courses</a></li>
-           <li><a href="/index" class="ce">Pages</a></li>
-           <li><a href="/index" class="ce" >Contact</a></li>
-         </ul>
-    
-     </nav>
-     <div class="auth">
-    <a href="/login" class="ces">Log In</a>
-    <a href="/register" class="signup">Sign up</a>
+  <div class="all">
+    <header>
+      <img src="Logo.png" alt="logo" class="logo" />
+      <button class="menu-icon" v-show="isMobile" @click="toggleMenu">
+        <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+      </button>
+   
+      <nav v-show="isMobile ? showMenu : true">
+        <ul class="links">
+          <li><NuxtLink to="/" class="nav-link">Home</NuxtLink></li>
+          <li><NuxtLink to="/CourseCatalog" class="nav-link">Courses</NuxtLink></li>
+          <li><NuxtLink to="/educators" class="nav-link">Educators</NuxtLink></li>
+          <li><NuxtLink to="/contact" class="nav-link">Contact</NuxtLink></li>
+        </ul>
+      </nav>
+   
+      <div class="auth">
+        <NuxtLink to="/login" class="nav-link">Log In</NuxtLink>
+        <NuxtLink to="/register" class="signup">Sign up</NuxtLink>
+      </div>
+    </header>
   </div>
- </header>
-</body>
-</template>
+  </template>
+<script>
+ export default {
+ data() {
+   return {
+     isMobile: window.innerWidth <= 768,
+     showMenu: false,
+   };
+ },
+ methods: {
+   toggleMenu() {
+     this.showMenu = !this.showMenu;
+   },
+ },
+ mounted() {
+   window.addEventListener('resize', () => {
+     this.isMobile = window.innerWidth <= 768;
+   });
+ },
+ beforeDestroy() {
+   window.removeEventListener('resize');
+ },
+};
+
+</script>  
 
 <style scoped>
+.bar {
+ display: block;
+ width: 25px;
+ height: 3px;
+ margin: 4px auto;
+ background-color: #333;
+ transition: background-color 0.25s;
+}
+.menu-icon {
+ display: none;
+ cursor: pointer;
+ background: transparent;
+ border: none;
+ font-size: 30px;
+ color: #333;
+ transition: color 0.25s;
+}
 
+.menu-icon:hover {
+ color: #309255;
+}
+
+@media screen and (max-width: 768px) {
+ .menu-icon {
+   display: block;
+ }
+
+ .links {
+   display: none;
+ }
+
+ .show-menu {
+   display: block;
+ }
+}
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   text-decoration: none;
   list-style-type: none;
+}
+@media screen and (max-width: 768px) {
+  .all{
+    padding: 5px; /* Adjust the padding for smaller screens */
  
-  
- }
-
- 
- .logo {
+  }
+}
+.logo {
   width: 120px;
   display: flex;
- }
+}
 
- li {
+.nav-link {
   font-weight: 500;
   text-decoration: none;
-  color: black;
-  font-size: 20px;
-  margin-left: 140px;
-  
+  color: #333;
+  font-size: 18px;
+  margin: 0 20px;
+  transition: color 0.25s;
+}
 
- 
- }
+.auth {
+  margin-right: 20px;
+}
 
- .auth{
-  margin-right: 180px;
- }
- .ces{
-font-size: 20px;
- }
-.signup{
-  margin-left: 30px;
+.signup {
   background-color: #309255;
- padding:10px;
+  padding: 10px 20px;
   border-radius: 8px;
   color: white;
-  transition: background-color .25s;
-  font-size: 20px;
+  transition: background-color 0.25s;
+  font-size: 18px;
 }
- a{
-  transition: color .25s;
-  color: black;
- }
-.links{
-  display: flex;
-  
-  padding:0px 20px;
-}
- header {
- 
- 
-  display: flex;
-  height: 200px;
-justify-content: space-between;
-  align-items: center;
-  padding: 30px 10%;
-  background-color:#e7f8ee; 
-  
- }
 
-.signup:hover{
+.links {
+  display: flex;
+}
+
+header {
+  display: flex;
+  height: 80px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+  background-color: #e7f8ee;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.signup:hover {
   background-color: #3ead68;
 }
 
-.ce:hover{
-  color:#309255;
-  text-decoration: underline;
-}
-.ces:hover{
-  color:#309255;
-
+.nav-link:hover {
+  color: #309255;
 }
 
-.active{
-  color:#309255
+.active {
+  color: #309255;
+  font-weight: bold;
 }
 </style>
-
